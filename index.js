@@ -6,11 +6,15 @@ const port = 3000;
 app.use(bodyParser.json({ type: 'application/json' }));
 
 app.post('/test', (req, res) => {
-  res.send(cutString(req.body.string_to_cut));
+  if(req.body.string_to_cut) {
+    res.send(cutString(req.body.string_to_cut));
+  } else {
+    res.status(400).send('Invalid input, please use { "string_to_cut": "YOUR_STRING_HERE" } format');
+  }
 });
 
 const cutString = string => {
-  let thirdLetterStr = "";
+  let thirdLetterStr = '';
   if(string.length > 2) {
     for(let i = 2; i < string.length; i += 3) {
         thirdLetterStr += string[i];
